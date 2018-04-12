@@ -37,13 +37,11 @@ namespace memodom
             foreach (Categories categorie in categories)
             {
                 if (categorie.categorie.Count() > 1 && categorie.subCategorie.Count() > 1)
-                    Console.WriteLine("INSERT INTO `memodom_test`.`subcategories` (`id`, `title`, `category_id`, `type`) VALUES(NULL, '" 
+                    Console.WriteLine("INSERT INTO `memodom_test`.`subcategories` (`id`, `title`, `category_id`) VALUES(NULL, '" 
                                       + categorie.subCategorie 
                                       + "', (SELECT id FROM categories WHERE title ='" 
                                       + categorie.categorie 
-                                      + "' GROUP BY title), '" 
-                                      + categorie.type 
-                                      + "'); ");
+                                      + "' GROUP BY title)); ");
             }
         }
 
@@ -52,8 +50,10 @@ namespace memodom
             foreach (Categories categorie in categories)
             {
                 if (categorie.categorie.Count() > 1)
-                    Console.WriteLine("INSERT INTO `memodom_test`.`categories` (`id`, `title`) VALUES(NULL, '" 
+                    Console.WriteLine("INSERT INTO `memodom_test`.`categories` (`id`, `title`, `type`) VALUES(NULL, '" 
                                       + categorie.categorie 
+                                      + "', '"
+                                      + categorie.type 
                                       + "');");
             }
         }
