@@ -14,6 +14,7 @@ namespace memodom
         {
             public string categorie { get; set; }
             public string subCategorie { get; set; }
+            public string type { get; set; }
         }
 
         static void Main(string[] args)
@@ -36,7 +37,13 @@ namespace memodom
             foreach (Categories categorie in categories)
             {
                 if (categorie.categorie.Count() > 1 && categorie.subCategorie.Count() > 1)
-                    Console.WriteLine("INSERT INTO `memodom_test`.`subcategories` (`id`, `title`, `category_id`) VALUES(NULL, '" + categorie.subCategorie + "', (SELECT id FROM categories WHERE title = '" + categorie.categorie + "')); ");
+                    Console.WriteLine("INSERT INTO `memodom_test`.`subcategories` (`id`, `title`, `category_id`, `type`) VALUES(NULL, '" 
+                                      + categorie.subCategorie 
+                                      + "', (SELECT id FROM categories WHERE title ='" 
+                                      + categorie.categorie 
+                                      + "' GROUP BY title), '" 
+                                      + categorie.type 
+                                      + "'); ");
             }
         }
 
@@ -45,7 +52,9 @@ namespace memodom
             foreach (Categories categorie in categories)
             {
                 if (categorie.categorie.Count() > 1)
-                    Console.WriteLine("INSERT INTO `memodom_test`.`categories` (`id`, `title`) VALUES(NULL, '" + categorie.categorie + "');");
+                    Console.WriteLine("INSERT INTO `memodom_test`.`categories` (`id`, `title`) VALUES(NULL, '" 
+                                      + categorie.categorie 
+                                      + "');");
             }
         }
 
@@ -75,6 +84,7 @@ namespace memodom
 
                     tmpCat.categorie = categories[i].categorie;
                     tmpCat.subCategorie = categories[i].subCategorie;
+                    tmpCat.type = categories[i].type;
                     categoriesClean.Add(tmpCat);
                 }
                 i++;
@@ -94,6 +104,7 @@ namespace memodom
 
                     categories.categorie = csv[0];
                     categories.subCategorie = csv[1];
+                    categories.type = csv[2];
                     categoriesList.Add(categories);
                 }
             }
